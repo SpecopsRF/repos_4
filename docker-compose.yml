@@ -1,0 +1,60 @@
+# ============================================
+# Docker Compose для Crypto Tracker
+# ============================================
+# Запуск: docker-compose up -d
+# Остановка: docker-compose down
+# Логи: docker-compose logs -f
+# ============================================
+
+version: '3.8'
+
+services:
+  # ----- Основное приложение -----
+  crypto-tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: crypto-tracker-app
+    
+    # Порты: хост:контейнер
+    ports:
+      - "8000:8000"
+    
+    # Переменные окружения
+    environment:
+      - APP_NAME=Crypto Tracker
+      - APP_VERSION=1.0.0
+      - DEBUG=false
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    
+    # Лимиты ресурсов
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Политика перезапуска
+    restart: unless-stopped
+    
+    # Сеть
+    networks:
+      - crypto-network
+
+# ----- Сети -----
+networks:
+  crypto-network:
+    driver: bridge

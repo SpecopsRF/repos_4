@@ -1,0 +1,54 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Tests (не нужны в production образе)
+tests/
+pytest.ini
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.docker/
+
+# Kubernetes
+k8s/
+
+# Terraform
+terraform/
+*.tfstate
+*.tfstate.*
+
+# CI/CD
+.github/
+
+# Security reports
+security-reports/
+
+# Documentation
+*.md
+docs/
+
+# Environment files
+.env
+.env.*
